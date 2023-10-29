@@ -1,0 +1,12 @@
+*Crear un usuario 
+
+{
+  "id": 2,
+  "name": "Cristian",
+  "lastname": "Cordoba",
+  "email": "cordoba96@gmail.com",
+  "password": "cristian",
+  "phone": 3224506325,
+  "address": "Cr 21",
+  "role": "customer"
+}
