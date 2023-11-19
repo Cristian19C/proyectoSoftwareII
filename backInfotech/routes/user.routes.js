@@ -1,7 +1,9 @@
-const express = require('express')
-const router = express.Router()
+import { Router } from 'express'
+const router = Router()
 
-const {obtainAllUsers, saveUser, findUserById, deleteUser, loginUser, sendMailRecoveryPass, updatePassword} = require('../controllers/controll_user')
+import {obtainAllUsers, saveUser, findUserById, deleteUser, loginUser, sendMailRecoveryPass, updatePassword} from '../controllers/controll_user.js'
+
+
 
 router.get('/', obtainAllUsers)
 router.post('/', saveUser)

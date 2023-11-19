@@ -19,7 +19,8 @@ const userSchema = new Schema({
         type: String, 
         required: true,
         lowercase: true,
-        trim: true
+        trim: true,
+        unique: true
     },
     password: {
         type: String,
@@ -38,6 +39,8 @@ const userSchema = new Schema({
         enum: ['employee', 'customer', 'administrator'],
         default: 'customer'
     }
+},{
+    timestamps: true
 })
 
 module.exports = mongoose.model('user', userSchema)
