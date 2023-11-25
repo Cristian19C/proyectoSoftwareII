@@ -1,14 +1,19 @@
-const mongoose = require('mongoose')
+// connect_bd.js
+import mongoose from 'mongoose';
 
-const URLMONGO = process.env.URLMONGO
-
-const options={
-    useNewUrlParser : true,
+const options = {
+    useNewUrlParser: true,
     useUnifiedTopology: true
-}
+};
+console.log(process.env.URLMONGO);
 
-mongoose.connect(URLMONGO, options).then(()=>{
-    console.log('Successfully connected to the database');
-}).catch((error)=>{
-    console.log('Error connected to the database', error);
-})
+const connectToDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.URLMONGO, options);
+        console.log('Successfully connected to the database');
+    } catch (error) {
+        console.log('Error connected to the database', error);
+    }
+};
+
+export default connectToDatabase;
