@@ -4,7 +4,7 @@ import { createTransport } from 'nodemailer'
 
 export async function saveUser(req, res) {
     try {
-        const { id, name, lastname, email, password, phone, address, role } = req.body
+        const { id, name, lastname, email, password, phone, role } = req.body
         const User = await user.findOne({ email: email })
         if (!User) {
             const salt = await genSalt(10)
@@ -16,7 +16,6 @@ export async function saveUser(req, res) {
                 email,
                 password: hashedPassword,
                 phone,
-                address,
                 role
             })
 
@@ -178,6 +177,23 @@ export async function updatePassword(req, res) {
         })
     }
 }
+
+export async function logout (req, res) {
+    console.log('entro logout');
+    res.cookie('token','', {
+        expires: new Date(0)
+    })
+
+    return res.sendStatus(200)
+}
+
+//prueba de lgoueo y registro
+export async function prueba (req, res) {
+   
+
+    return res.status(200)
+}
+
 export async function profile(req, res) {
     const userFound = await user.findById(req.user.id)
 
@@ -194,6 +210,7 @@ export async function profile(req, res) {
     })
 }
 export async function verifyToken(req, res) {
+    console.log('verifyToken');
     const { token } = req.cookies
 
     if (!token) return res.status(401).json({
