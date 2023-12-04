@@ -1,46 +1,71 @@
-import mongoose, { model } from 'mongoose'
-const {Schema}= mongoose
+import mongoose, { model } from 'mongoose';
+const { Schema } = mongoose;
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     id: {
-        type: Number,
-        required: true,
-        unique: true
+      type: Number,
+      unique: true,
     },
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     lastname: {
-        type: String,
-        required: true
-    }, 
+      type: String,
+      required: true,
+    },
     email: {
-        type: String, 
-        required: true,
-        lowercase: true,
-        trim: true,
-        unique: true
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     phone: {
-        type: Number,
-        required: true
-    },
-    address: {
-        type: String,
-        required: true
+      type: Number,
+      required: true,
     },
     role: {
-        type: String,
-        enum: ['employee', 'customer', 'administrator'],
-        default: 'customer'
-    }
-},{
-    timestamps: true
-})
+      type: String,
+      enum: ['employee', 'customer', 'administrator'],
+      default: 'customer',
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export default model('user', userSchema)
+// Agregar campo autoincremental
+userSchema.add({
+  autoIncrement: {
+    type: Number,
+    unique: true,
+  },
+});
+
+// Configurar middleware para generar el valor autoincremental antes de guardar
+userSchema.pre('save', async function (next) {
+  const doc = this;
+
+  if (!doc.id) {
+    // Solo generamos el nuevo valor si no se proporcionó un id manualmente
+    try {
+      const maxIdDoc = await doc.constructor.findOne().sort('-id');
+      doc.id = maxIdDoc ? maxIdDoc.id + 1 : 1;
+      doc.autoIncrement = doc.id + 1;
+      next();
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    next();
+  }
+});
+
+export default model('user', userSchema);
