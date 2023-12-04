@@ -2,7 +2,7 @@ import {Router} from 'express'
 const router = Router()
 
 //funciones para la coleccion de usuarios
-import {obtainAllUsers, saveUser, findUserById, deleteUser, loginUser, sendMailRecoveryPass, updatePassword, profile, verifyToken} from '../controllers/controll_user.js'
+import {obtainAllUsers, saveUser, findUserById, deleteUser, loginUser, sendMailRecoveryPass, updatePassword, profile, verifyToken, logout, prueba} from '../controllers/controll_user.js'
 
 //modelo para la validacion del cuerpo de las peticiones
 import { registerUserShema, loginUserSchema } from '../shemas/user.schema.js'
@@ -18,7 +18,11 @@ router.delete('/:id', deleteUser)
 router.post('/login', validateSchema(loginUserSchema),loginUser)
 router.post('/updatePassword', updatePassword)
 router.post('/sendEmail/:email', sendMailRecoveryPass)
-router.post('verify', verifyToken)
+router.get('/verify', verifyToken)
 router.get('/profile', authRequired, profile)
+router.post('/logout', logout)
+router.get('/prueba', authRequired, prueba)
+
+
 
 export default router
