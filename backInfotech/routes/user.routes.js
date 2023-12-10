@@ -7,7 +7,7 @@ import {obtainAllUsers, saveUser, findUserById, deleteUser, loginUser, sendMailR
 //modelo para la validacion del cuerpo de las peticiones
 import { registerUserShema, loginUserSchema } from '../shemas/user.schema.js'
 //funcion para validar el modelo de las peticiones
-import { validateSchema } from '../middlewares/validatorUser.js'
+import { validateSchema } from '../middlewares/validatorRequest.js'
 import { authRequired } from '../middlewares/validateToken.js'
 
 //configuracion de rutas para la parte de usuarios
